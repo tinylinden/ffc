@@ -1,0 +1,6 @@
+# skip generation of everything...
+**
+
+# but api and model sources
+!**/*Dto.kt
+!**/*Api.kt

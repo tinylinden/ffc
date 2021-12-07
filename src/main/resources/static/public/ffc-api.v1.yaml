@@ -1,0 +1,106 @@
+openapi: 3.0.0
+info:
+  title: Fast and Furious Cinema API
+  version: v1
+servers:
+  - url: "http://localhost:8080/"
+    description: "Local development server"
+tags:
+  - name: internal
+  - name: public
+paths:
+  /public/showings:
+    get:
+      summary: Find showings
+      tags:
+        - public
+      operationId: findShowings
+      parameters:
+        - name: dateFrom
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+            example: "2021-12-07"
+        - name: dateTo
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+            example: "2021-12-08"
+      responses:
+        200:
+          description: Showings for given dates
+          content:
+            application/vnd.ffc.v1+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ShowingsForDate'
+        400:
+          description: Error details if request does not meet API specification
+  /internal/showings/{date}:
+    put:
+      summary: Set or replace showings for given date
+      tags:
+        - internal
+      operationId: setOrReplaceShowings
+      parameters:
+        - name: date
+          in: path
+          required: true
+          schema:
+            type: string
+            format: date
+            example: "2021-12-07"
+      requestBody:
+        content:
+          application/vnd.ffc.v1+json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Showing'
+      responses:
+        201:
+          description: ...
+        400:
+          description: ...
+components:
+  schemas:
+    ShowingsForDate:
+      properties:
+        date:
+          type: string
+          format: date
+          example: "2020-12-07"
+        screenings:
+          type: array
+          items:
+            $ref: '#/components/schemas/Showing'
+    Showing:
+      properties:
+        movie_id:
+          type: string
+          pattern: "^tt\\d+$"
+          example: "tt0232500"
+        start_at:
+          type: string
+          pattern: "^\\d{2}:\\d{2}$"
+          example: "13:30"
+        ticket_price:
+          $ref: "#/components/schemas/Price"
+    Price:
+      required:
+        - currency
+        - amount
+      properties:
+        currency:
+          type: string
+          pattern: "^[A-Z]{3}$"
+          example: "EUR"
+        amount:
+          type: number
+          format: double
+          example: 4.20
