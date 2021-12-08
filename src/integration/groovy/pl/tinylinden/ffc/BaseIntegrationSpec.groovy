@@ -23,7 +23,7 @@ abstract class BaseIntegrationSpec extends Specification {
         MONGO.start()
 
         MOCK_SERVER.start()
-        MockServerInitializer.init(MOCK_SERVER)
+        MockServerInitializer.configureExpectations(MOCK_SERVER)
     }
 
     @DynamicPropertySource

@@ -9,14 +9,7 @@ class OmdbMovieDetailsSpec extends Specification {
 
     def "should deserialize movie details from json"() {
         given:
-            def json = """
-                                |{  
-                                |   "Title":"The Fast and the Furious",
-                                |   "Released":"22 Jun 2001",
-                                |   "Runtime":"106 min",
-                                |   "Plot":"Los Angeles police officer Brian O'Conner...",
-                                |   "imdbRating":"6.8"
-                                |}""".stripMargin()
+            def json = OmdbDataMother.partialResponse()
 
         when:
             def actual = new JacksonConfig().objectMapper().readValue(json, OmdbMovieDetails.class)

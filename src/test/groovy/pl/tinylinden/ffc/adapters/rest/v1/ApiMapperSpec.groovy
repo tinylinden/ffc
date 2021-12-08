@@ -1,7 +1,7 @@
 package pl.tinylinden.ffc.adapters.rest.v1
 
 import org.mapstruct.factory.Mappers
-import pl.tinylinden.ffc.core.model.TestDataMother
+import pl.tinylinden.ffc.core.model.CoreDataMother
 import spock.lang.Shared
 import spock.lang.Specification
 import spock.lang.Subject
@@ -16,7 +16,7 @@ class ApiMapperSpec extends Specification {
 
     def "should map Showing to Dto"() {
         given:
-            def showing = TestDataMother.showing()
+            def showing = CoreDataMother.showing()
 
         when:
             def actual = tested.toDto(showing)
@@ -30,7 +30,7 @@ class ApiMapperSpec extends Specification {
 
     def "should map ShowingsForDate to Dto"() {
         given:
-            def showings = TestDataMother.showingsForDate()
+            def showings = CoreDataMother.showingsForDate()
 
         when:
             def actual = tested.toDto(showings)

@@ -3,7 +3,7 @@ package pl.tinylinden.ffc.core.model
 import java.time.LocalDate
 import java.time.LocalTime
 
-class TestDataMother {
+class CoreDataMother {
 
     static ShowingsForDate showingsForDate() {
         new ShowingsForDate(
