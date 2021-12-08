@@ -51,6 +51,19 @@ class ApiIntegrationSpec extends BaseIntegrationSpec {
             "2020-12-01" | "2021-12-31"
     }
 
+    def "should get movie details"() {
+        expect:
+            def response = RestAssured.given()
+                    .accept("application/vnd.ffc.v1+json")
+                    .pathParam("id", "tt0232500")
+                    .get("http://localhost:8080/public/movies/{id}/details")
+                    .then()
+                    .statusCode(200)
+
+        and:
+            JSONAssert.assertEquals(expectedMovieDetails(), response.extract().asString(), false)
+    }
+
     private static String sampleShowings() {
         return """
                  |[
@@ -82,5 +95,16 @@ class ApiIntegrationSpec extends BaseIntegrationSpec {
                  |    ]
                  |  }
                  |]""".stripMargin()
+    }
+
+    private static String expectedMovieDetails() {
+        return """
+                 |{
+                 |  "title": "The Fast and the Furious",
+                 |  "release_date": "2001-06-22",
+                 |  "runtime": "106 min",
+                 |  "imdb_rating": 6.8,
+                 |  "plot": "Los Angeles police officer Brian O'Conner must decide where his loyalty really lies when he becomes enamored with the street racing world he has been sent undercover to destroy."
+                 |}""".stripMargin()
     }
 }

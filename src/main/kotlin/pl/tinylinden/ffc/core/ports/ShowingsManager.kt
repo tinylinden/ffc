@@ -4,5 +4,5 @@ import pl.tinylinden.ffc.core.model.ShowingsForDate
 
 interface ShowingsManager {
 
-    fun saveShowings(showings: List<ShowingsForDate>)
+    fun setOrReplaceShowings(showings: List<ShowingsForDate>)
 }

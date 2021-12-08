@@ -10,7 +10,7 @@ class MongoShowingsManager(
     private val mapper: MongoMapper
 ) : ShowingsManager {
 
-    override fun saveShowings(showings: List<ShowingsForDate>) {
+    override fun setOrReplaceShowings(showings: List<ShowingsForDate>) {
         val documents = showings.map { mapper.toDocument(it) }
         repository.saveAll(documents)
     }

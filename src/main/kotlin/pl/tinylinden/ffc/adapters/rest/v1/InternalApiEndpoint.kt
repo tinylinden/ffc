@@ -15,7 +15,7 @@ class InternalApiEndpoint(
 
     override fun setOrReplaceShowings(date: LocalDate, showingDto: List<ShowingDto>): ResponseEntity<Unit> {
         val showings = ShowingsForDate(date, showingDto.map { mapper.fromDto(it) })
-        showingsManager.saveShowings(listOf(showings))
+        showingsManager.setOrReplaceShowings(listOf(showings))
         return ResponseEntity.accepted().build()
     }
 }

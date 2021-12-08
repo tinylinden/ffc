@@ -40,7 +40,30 @@ paths:
                 items:
                   $ref: '#/components/schemas/ShowingsForDate'
         400:
-          description: Error details if request does not meet API specification
+          description: If request does not meet API specification
+  /public/movies/{id}/details:
+    get:
+      summary: Get movie details
+      tags:
+        - public
+      operationId: getMovieDetails
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: "^tt\\d+$"
+            example: "tt0232500"
+      responses:
+        200:
+          description: Movie deatails
+          content:
+            application/vnd.ffc.v1+json:
+              schema:
+                $ref: '#/components/schemas/MovieDetails'
+        400:
+          description: If request does not meet API specification
   /internal/showings/{date}:
     put:
       summary: Set or replace showings for given date
@@ -65,9 +88,9 @@ paths:
                 $ref: '#/components/schemas/Showing'
       responses:
         202:
-          description: ...
+          description: If screenings were set or replaced
         400:
-          description: ...
+          description: If request does not meet API specification
 components:
   schemas:
     ShowingsForDate:
@@ -112,3 +135,28 @@ components:
           type: number
           format: double
           example: 4.95
+    MovieDetails:
+      required:
+        - title
+        - description
+        - release_date
+        - runtime
+        - imdb_rating
+      properties:
+        title:
+          type: string
+          example: "The Fast and the Furious"
+        plot:
+          type: string
+          example: "Los Angeles police officer Brian O'Conner..."
+        release_date:
+          type: string
+          format: date
+          example: "2001-06-22"
+        runtime:
+          type: string
+          example: "106 min"
+        imdb_rating:
+          type: number
+          format: double
+          example: 6.8

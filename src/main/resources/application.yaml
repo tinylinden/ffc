@@ -9,6 +9,17 @@ spring:
     format:
       date: iso
 
-#logging:
-#  level:
-#    org.springframework.data.mongodb.core.MongoTemplate: DEBUG
+adapters:
+  omdb:
+    url: "http://www.omdbapi.com"
+    api-key: "change-me"
+
+feign:
+  client:
+    config:
+      default:
+        loggerLevel: basic
+
+logging:
+  level:
+    pl.tinylinden.ffc: trace

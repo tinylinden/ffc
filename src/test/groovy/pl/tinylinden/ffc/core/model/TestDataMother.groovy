@@ -35,4 +35,14 @@ class TestDataMother {
     static Price price() {
         new Price("EUR", 4.95)
     }
+
+    static MovieDetails movieDetails() {
+        new MovieDetails(
+                "The Fast and the Furious",
+                "Los Angeles police officer Brian O'Conner must decide where his loyalty really lies when he becomes enamored with the street racing world he has been sent undercover to destroy.",
+                LocalDate.of(2001, 6, 22),
+                "106 min",
+                6.8
+        )
+    }
 }

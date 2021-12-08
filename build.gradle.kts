@@ -39,6 +39,7 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.rest-assured:rest-assured:4.4.0")
 	testImplementation("org.skyscreamer:jsonassert:1.5.0")
+	testImplementation("org.mock-server:mockserver-client-java:5.11.2")
 	// spock
 	testImplementation("org.codehaus.groovy:groovy:3.0.9")
 	testImplementation("org.spockframework:spock-core:2.0-groovy-3.0")
@@ -47,6 +48,7 @@ dependencies {
 	testImplementation("org.testcontainers:testcontainers:${property("testcontainersVersion")}")
 	testImplementation("org.testcontainers:spock:${property("testcontainersVersion")}")
 	testImplementation("org.testcontainers:mongodb:${property("testcontainersVersion")}")
+	testImplementation("org.testcontainers:mockserver:${property("testcontainersVersion")}")
 }
 
 dependencyManagement {

@@ -4,8 +4,10 @@ import org.mapstruct.InheritInverseConfiguration
 import org.mapstruct.Mapper
 import org.mapstruct.Mapping
 import org.mapstruct.Mappings
+import pl.tinylinden.ffc.adapters.rest.v1.model.MovieDetailsDto
 import pl.tinylinden.ffc.adapters.rest.v1.model.ShowingDto
 import pl.tinylinden.ffc.adapters.rest.v1.model.ShowingsForDateDto
+import pl.tinylinden.ffc.core.model.MovieDetails
 import pl.tinylinden.ffc.core.model.Showing
 import pl.tinylinden.ffc.core.model.ShowingsForDate
 
@@ -24,4 +26,6 @@ interface ApiMapper {
 
     @InheritInverseConfiguration
     fun fromDto(source: ShowingDto): Showing
+
+    fun toDto(source: MovieDetails): MovieDetailsDto
 }

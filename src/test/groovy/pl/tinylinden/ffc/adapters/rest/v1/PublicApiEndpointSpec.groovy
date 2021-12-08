@@ -2,19 +2,23 @@ package pl.tinylinden.ffc.adapters.rest.v1
 
 import org.mapstruct.factory.Mappers
 import org.springframework.http.HttpStatus
+import pl.tinylinden.ffc.core.model.MovieId
 import pl.tinylinden.ffc.core.model.TestDataMother
+import pl.tinylinden.ffc.core.ports.MovieDetailsProvider
 import pl.tinylinden.ffc.core.ports.ShowingsFinder
 import spock.lang.Specification
 import spock.lang.Subject
 
 class PublicApiEndpointSpec extends Specification {
 
-    ShowingsFinder finder = Mock()
+    ShowingsFinder showingsFinder = Mock()
+
+    MovieDetailsProvider movieDetailsProvider = Mock()
 
     ApiMapper mapper = Mappers.getMapper(ApiMapper.class)
 
     @Subject
-    PublicApiEndpoint tested = new PublicApiEndpoint(finder, mapper)
+    PublicApiEndpoint tested = new PublicApiEndpoint(showingsFinder, movieDetailsProvider, mapper)
 
     def "should return showings if any was found for given dates"() {
         given:
@@ -30,7 +34,7 @@ class PublicApiEndpointSpec extends Specification {
             actual.body == [mapper.toDto(showings)]
 
         and:
-            finder.findShowings(fromDate, toDate) >> [showings]
+            showingsFinder.findShowings(fromDate, toDate) >> [showings]
     }
 
     def "should return empty list if no showings was found for given dates"() {
@@ -46,6 +50,22 @@ class PublicApiEndpointSpec extends Specification {
             actual.body == []
 
         and:
-            finder.findShowings(fromDate, toDate) >> []
+            showingsFinder.findShowings(fromDate, toDate) >> []
+    }
+
+    def "should return movie details"() {
+        given:
+            def id = "tt0232500"
+            def movieDetails = TestDataMother.movieDetails()
+
+        when:
+            def actual = tested.getMovieDetails(id)
+
+        then:
+            actual.statusCode == HttpStatus.OK
+            actual.body == mapper.toDto(movieDetails)
+
+        and:
+            movieDetailsProvider.getMovieDetails(new MovieId(id)) >> movieDetails
     }
 }
