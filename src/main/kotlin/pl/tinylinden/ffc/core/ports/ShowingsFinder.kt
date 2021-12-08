@@ -5,5 +5,5 @@ import java.time.LocalDate
 
 interface ShowingsFinder {
 
-    fun findShowings(fromDate: LocalDate, toDate: LocalDate): List<ShowingsForDate>
+    fun findShowings(from: LocalDate, to: LocalDate): List<ShowingsForDate>
 }

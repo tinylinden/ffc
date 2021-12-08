@@ -5,6 +5,7 @@ plugins {
 	id("io.spring.dependency-management") version "1.0.11.RELEASE"
 	kotlin("jvm") version "1.6.0"
 	kotlin("plugin.spring") version "1.6.0"
+	kotlin("kapt") version "1.6.0"
 	groovy
 	id("com.coditory.integration-test") version "1.2.1"
 	id("com.adarshr.test-logger") version "3.1.0"
@@ -20,7 +21,6 @@ repositories {
 }
 
 extra["springCloudVersion"] = "2020.0.4"
-extra["cucumberVersion"] = "6.11.0"
 extra["testcontainersVersion"] = "1.15.2"
 
 dependencies {
@@ -30,16 +30,18 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
-
 	implementation("io.springfox:springfox-boot-starter:3.0.0")
 	implementation("javax.validation:validation-api:2.0.0.Final")
+	implementation("org.mapstruct:mapstruct:1.4.2.Final")
+
+	kapt("org.mapstruct:mapstruct-processor:1.4.2.Final")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.rest-assured:rest-assured:4.4.0")
+	testImplementation("org.skyscreamer:jsonassert:1.5.0")
 	// spock
 	testImplementation("org.codehaus.groovy:groovy:3.0.9")
 	testImplementation("org.spockframework:spock-core:2.0-groovy-3.0")
-	testImplementation("org.spockframework:spock-junit4:2.0-groovy-3.0")
 	testImplementation("org.spockframework:spock-spring:2.0-groovy-3.0")
 	// testcontainers
 	testImplementation("org.testcontainers:testcontainers:${property("testcontainersVersion")}")

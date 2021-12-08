@@ -12,11 +12,11 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @SpringBootTest(webEnvironment = DEFINED_PORT)
 abstract class BaseIntegrationSpec extends Specification {
 
-    static MongoDBContainer MONGO_CONTAINER =
+    static MongoDBContainer MONGO =
             new MongoDBContainer(DockerImageName.parse("mongo:4.4.4"))
 
     def setupSpec() {
-        MONGO_CONTAINER.start()
+        MONGO.start()
     }
 
     @DynamicPropertySource
@@ -25,6 +25,6 @@ abstract class BaseIntegrationSpec extends Specification {
     }
 
     private static Object mongoPort() {
-        MONGO_CONTAINER.getMappedPort(27017)
+        MONGO.getMappedPort(27017)
     }
 }
