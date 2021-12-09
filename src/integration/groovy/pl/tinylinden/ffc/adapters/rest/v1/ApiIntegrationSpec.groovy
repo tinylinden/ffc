@@ -104,6 +104,41 @@ class ApiIntegrationSpec extends BaseIntegrationSpec {
             id << ["tt5433138", "tt0000000"]
     }
 
+    def "should store only last rating for movie for given user"() {
+        when:
+            RestAssured.given()
+                    .auth().preemptive().basic("elmo", "secret")
+                    .contentType("application/vnd.ffc.v1+json")
+                    .accept("application/vnd.ffc.v1+json")
+                    .pathParam("id", "tt0232500")
+                    .body(sampleRating(3))
+                    .post("http://localhost:8080/public/movies/{id}/ratings")
+                    .then()
+                    .statusCode(202)
+
+        and:
+            RestAssured.given()
+                    .auth().preemptive().basic("elmo", "secret")
+                    .contentType("application/vnd.ffc.v1+json")
+                    .accept("application/vnd.ffc.v1+json")
+                    .pathParam("id", "tt0232500")
+                    .body(sampleRating(2))
+                    .post("http://localhost:8080/public/movies/{id}/ratings")
+                    .then()
+                    .statusCode(202)
+
+        then:
+            def response = RestAssured.given()
+                    .accept("application/vnd.ffc.v1+json")
+                    .pathParam("id", "tt0232500")
+                    .get("http://localhost:8080/public/movies/{id}/ratings")
+                    .then()
+                    .statusCode(200)
+
+        and:
+            JSONAssert.assertEquals(expectedAverageRating(1, 2), response.extract().asString(), false)
+    }
+
     private static String sampleShowings() {
         return """
                  |[
@@ -145,6 +180,21 @@ class ApiIntegrationSpec extends BaseIntegrationSpec {
                  |  "runtime": "106 min",
                  |  "imdb_rating": 6.8,
                  |  "plot": "Los Angeles police officer Brian O'Conner must decide where his loyalty really lies when he becomes enamored with the street racing world he has been sent undercover to destroy."
+                 |}""".stripMargin()
+    }
+
+    private static String sampleRating(int rating) {
+        return """
+                 |{
+                 |  "rating": ${rating}
+                 |}""".stripMargin()
+    }
+
+    private static String expectedAverageRating(int votesCount, double averageRating) {
+        return """
+                 |{
+                 |  "votesCount": ${votesCount},
+                 |  "averageRating": ${averageRating}
                  |}""".stripMargin()
     }
 }

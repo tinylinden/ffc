@@ -15,8 +15,8 @@ class OmdbMovieDetailsProvider(
 ) : MovieDetailsProvider {
 
     @Cacheable(CACHE_NAME_MOVIE_DETAILS)
-    override fun getMovieDetails(id: MovieId): MovieDetails =
-        client.getMovieDetails(properties.apiKey, id.imdbId)
+    override fun getMovieDetails(movie: MovieId): MovieDetails =
+        client.getMovieDetails(properties.apiKey, movie.imdbId)
             .takeIf { it.isSuccess }
             ?.let { mapper.fromOmdb(it) }
             ?: throw OmdbMovieDetailsNotFoundException()

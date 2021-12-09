@@ -24,3 +24,15 @@ data class MongoPrice(
     val currency: String,
     val amount: BigDecimal
 )
+
+@Document(collection = "ratings")
+@TypeAlias("Rating")
+data class MongoRating(
+    @Id @MongoId val id: MongoRatingId,
+    val rating: Int
+)
+
+data class MongoRatingId(
+    val author: String,
+    val movieId: String
+)

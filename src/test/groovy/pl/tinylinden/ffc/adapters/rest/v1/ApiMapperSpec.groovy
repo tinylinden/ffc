@@ -1,6 +1,7 @@
 package pl.tinylinden.ffc.adapters.rest.v1
 
 import org.mapstruct.factory.Mappers
+import pl.tinylinden.ffc.adapters.rest.v1.model.RatingDto
 import pl.tinylinden.ffc.core.model.CoreDataMother
 import spock.lang.Shared
 import spock.lang.Specification
@@ -14,7 +15,7 @@ class ApiMapperSpec extends Specification {
     @Subject
     ApiMapper tested = Mappers.getMapper(ApiMapper.class)
 
-    def "should map Showing to Dto"() {
+    def "should map Showing to ShowingDto"() {
         given:
             def showing = CoreDataMother.showing()
 
@@ -28,7 +29,7 @@ class ApiMapperSpec extends Specification {
             actual.ticketPrice.amount == showing.ticketPrice.amount.doubleValue()
     }
 
-    def "should map ShowingsForDate to Dto"() {
+    def "should map ShowingsForDate to ShowingsForDateDto"() {
         given:
             def showings = CoreDataMother.showingsForDate()
 
@@ -47,5 +48,18 @@ class ApiMapperSpec extends Specification {
             actual.showings[0].ticketPrice.currency == showings.showings[0].ticketPrice.currency
             actual.showings[0].ticketPrice.amount == showings.showings[0].ticketPrice.amount.doubleValue()
 
+    }
+
+    def "should map RatingDto to Rating"() {
+        given:
+            def movieId = "tt4630562"
+            def ratingDto = new RatingDto(3)
+
+        when:
+            def actual = tested.fromDto(movieId, ratingDto)
+
+        then:
+            actual.movie.imdbId == movieId
+            actual.rating == ratingDto.rating
     }
 }

@@ -2,9 +2,11 @@ package pl.tinylinden.ffc.adapters.rest.v1
 
 import org.mapstruct.factory.Mappers
 import org.springframework.http.HttpStatus
-import pl.tinylinden.ffc.core.model.MovieId
 import pl.tinylinden.ffc.core.model.CoreDataMother
+import pl.tinylinden.ffc.core.model.MovieId
+import pl.tinylinden.ffc.core.ports.AverageRatingFinder
 import pl.tinylinden.ffc.core.ports.MovieDetailsProvider
+import pl.tinylinden.ffc.core.ports.RatingManager
 import pl.tinylinden.ffc.core.ports.ShowingsFinder
 import spock.lang.Specification
 import spock.lang.Subject
@@ -15,10 +17,15 @@ class PublicApiEndpointSpec extends Specification {
 
     MovieDetailsProvider movieDetailsProvider = Mock()
 
+    RatingManager ratingManager = Mock()
+
+    AverageRatingFinder averageRatingFinder = Mock()
+
     ApiMapper mapper = Mappers.getMapper(ApiMapper.class)
 
     @Subject
-    PublicApiEndpoint tested = new PublicApiEndpoint(showingsFinder, movieDetailsProvider, mapper)
+    PublicApiEndpoint tested =
+            new PublicApiEndpoint(showingsFinder, movieDetailsProvider, ratingManager, averageRatingFinder, mapper)
 
     def "should return showings if any was found for given dates"() {
         given:
@@ -27,7 +34,7 @@ class PublicApiEndpointSpec extends Specification {
             def showings = CoreDataMother.showingsForDate()
 
         when:
-            def actual = tested.findShowings(fromDate, toDate)
+            def actual = tested.getShowings(fromDate, toDate)
 
         then:
             actual.statusCode == HttpStatus.OK
@@ -43,7 +50,7 @@ class PublicApiEndpointSpec extends Specification {
             def toDate = fromDate.plusDays(1)
 
         when:
-            def actual = tested.findShowings(fromDate, toDate)
+            def actual = tested.getShowings(fromDate, toDate)
 
         then:
             actual.statusCode == HttpStatus.OK

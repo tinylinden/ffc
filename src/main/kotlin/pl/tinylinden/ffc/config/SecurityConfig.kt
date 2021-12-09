@@ -2,6 +2,7 @@ package pl.tinylinden.ffc.config
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpMethod.POST
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
@@ -20,6 +21,8 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
             .sessionManagement().sessionCreationPolicy(STATELESS)
             .and()
             .authorizeRequests().antMatchers("/internal/**").hasRole(ROLE_STAFF)
+            .and()
+            .authorizeRequests().antMatchers(POST, "/public/movies/*/ratings").hasRole(ROLE_USER)
             .and()
             .httpBasic()
             .authenticationEntryPoint(Http403ForbiddenEntryPoint())

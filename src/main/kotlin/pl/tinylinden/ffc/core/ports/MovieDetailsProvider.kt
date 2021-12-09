@@ -5,5 +5,5 @@ import pl.tinylinden.ffc.core.model.MovieId
 
 interface MovieDetailsProvider {
 
-    fun getMovieDetails(id: MovieId): MovieDetails
+    fun getMovieDetails(movie: MovieId): MovieDetails
 }
