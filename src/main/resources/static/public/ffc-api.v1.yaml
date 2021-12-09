@@ -64,6 +64,8 @@ paths:
                 $ref: '#/components/schemas/MovieDetails'
         400:
           description: If request does not meet API specification
+        404:
+          description: If no details was found
   /internal/showings/{date}:
     put:
       summary: Set or replace showings for given date

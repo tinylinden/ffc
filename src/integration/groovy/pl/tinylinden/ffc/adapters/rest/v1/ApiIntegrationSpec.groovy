@@ -64,6 +64,20 @@ class ApiIntegrationSpec extends BaseIntegrationSpec {
             JSONAssert.assertEquals(expectedMovieDetails(), response.extract().asString(), false)
     }
 
+    @Unroll
+    def "should be no details for movie #id"() {
+        expect:
+            RestAssured.given()
+                    .accept("application/vnd.ffc.v1+json")
+                    .pathParam("id", id)
+                    .get("http://localhost:8080/public/movies/{id}/details")
+                    .then()
+                    .statusCode(404)
+
+        where:
+            id << ["tt5433138", "tt0000000"]
+    }
+
     private static String sampleShowings() {
         return """
                  |[

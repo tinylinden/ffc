@@ -17,12 +17,34 @@ class MockServerInitializer {
                 request()
                         .withMethod("GET")
                         .withPath("/")
+                        .withQueryStringParameter("i", "tt0000000")
+        ).respond(
+                response()
+                        .withStatusCode(200)
+                        .withContentType(MediaType.APPLICATION_JSON)
+                        .withBody(OmdbDataMother.falseResponse())
+        )
+
+        client.when(
+                request()
+                        .withMethod("GET")
+                        .withPath("/")
                         .withQueryStringParameter("i", "tt0232500")
         ).respond(
                 response()
                         .withStatusCode(200)
                         .withContentType(MediaType.APPLICATION_JSON)
-                        .withBody(OmdbDataMother.fullResponse())
+                        .withBody(OmdbDataMother.trueResponse())
+        )
+
+        client.when(
+                request()
+                        .withMethod("GET")
+                        .withPath("/")
+                        .withQueryStringParameter("i", "tt5433138")
+        ).respond(
+                response()
+                        .withStatusCode(404)
         )
     }
 }

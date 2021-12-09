@@ -6,18 +6,25 @@ import java.time.LocalDate
 
 data class OmdbMovieDetails(
     @JsonProperty("Title")
-    val title: String,
+    val title: String?,
 
     @JsonProperty("Plot")
-    val plot: String,
+    val plot: String?,
 
     @JsonProperty("Released")
     @JsonFormat(pattern = "dd MMM yyyy", locale = "en_US")
-    val releaseDate: LocalDate,
+    val releaseDate: LocalDate?,
 
     @JsonProperty("Runtime")
-    val runtime: String,
+    val runtime: String?,
 
     @JsonProperty("imdbRating")
-    val imdbRating: Double
-)
+    val imdbRating: Double?,
+
+    @JsonProperty("Response")
+    val response: String
+) {
+
+    val isSuccess: Boolean
+        get() = response == "True"
+}

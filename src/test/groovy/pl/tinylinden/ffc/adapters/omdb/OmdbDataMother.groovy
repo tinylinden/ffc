@@ -2,18 +2,15 @@ package pl.tinylinden.ffc.adapters.omdb
 
 class OmdbDataMother {
 
-    static String partialResponse() {
+    static String falseResponse() {
         """
            |{  
-           |   "Title":"The Fast and the Furious",
-           |   "Released":"22 Jun 2001",
-           |   "Runtime":"106 min",
-           |   "Plot":"Los Angeles police officer Brian O'Conner...",
-           |   "imdbRating":"6.8"
+           |   "Error":"Error getting data.",
+           |   "Response":"False"
            |}""".stripMargin()
     }
 
-    static String fullResponse() {
+    static String trueResponse() {
         """
           |{  
           |   "Title":"The Fast and the Furious",
