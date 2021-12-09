@@ -22,4 +22,5 @@ feign:
 
 logging:
   level:
+    org.springframework.security: debug
     pl.tinylinden.ffc: trace

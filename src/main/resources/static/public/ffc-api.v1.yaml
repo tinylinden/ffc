@@ -72,6 +72,8 @@ paths:
       tags:
         - internal
       operationId: setOrReplaceShowings
+      security:
+        - BasicAuth: []
       parameters:
         - name: date
           in: path
@@ -93,7 +95,13 @@ paths:
           description: If screenings were set or replaced
         400:
           description: If request does not meet API specification
+        403:
+          description: If unauthorized
 components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
   schemas:
     ShowingsForDate:
       required:

@@ -19,10 +19,36 @@ class ApiIntegrationSpec extends BaseIntegrationSpec {
                     .body(Matchers.is("[]"));
     }
 
+    def "should not allow showings change by anonymous user"() {
+        expect:
+            RestAssured.given()
+                    .contentType("application/vnd.ffc.v1+json")
+                    .accept("application/vnd.ffc.v1+json")
+                    .pathParam("date", "2021-12-07")
+                    .body(sampleShowings())
+                    .put("http://localhost:8080/internal/showings/{date}")
+                    .then()
+                    .statusCode(403)
+    }
+
+    def "should not allow showings change by unauthorized user"() {
+        expect:
+            RestAssured.given()
+                    .auth().preemptive().basic("elmo", "secret")
+                    .contentType("application/vnd.ffc.v1+json")
+                    .accept("application/vnd.ffc.v1+json")
+                    .pathParam("date", "2021-12-07")
+                    .body(sampleShowings())
+                    .put("http://localhost:8080/internal/showings/{date}")
+                    .then()
+                    .statusCode(403)
+    }
+
     @Unroll
     def "should find showings between #from and #to"() {
         given:
             RestAssured.given()
+                    .auth().preemptive().basic("kermit", "secret")
                     .contentType("application/vnd.ffc.v1+json")
                     .accept("application/vnd.ffc.v1+json")
                     .pathParam("date", "2021-12-07")
@@ -65,7 +91,7 @@ class ApiIntegrationSpec extends BaseIntegrationSpec {
     }
 
     @Unroll
-    def "should be no details for movie #id"() {
+    def "should get no details for movie #id"() {
         expect:
             RestAssured.given()
                     .accept("application/vnd.ffc.v1+json")
