@@ -91,8 +91,8 @@ average rating and showing times in a single server call.
 
 ## It compiles - deploy
 
-Hell no - there's still a lot to be done. I think that in Fowler's _Make It Work Make
-It Right Make It Fast_, current state of the service is just after _It Work_.
+Hell no - there's still a lot to be done. I think that in Fowler's _Make It Work - Make
+It Right - Make It Fast_, current state of the service is just after _It Work_.
 
 At least following should be done:
 * Unit tests for all generated mappers, alongside with some programming suggar in form
@@ -109,7 +109,7 @@ At least following should be done:
 * Circuit breaker and fallback movie details provider for case when OMDb API would be 
   unavailable.
 * API rate limiting and monitoring - to know if service is performant enough and to know
-  the when some less naive (non blocking?) implmentation will be required. Not to forget
-  about DoS attacks.
+  when some less naive (non blocking?) implmentation will be required. Not to forget
+  about DoS attacks detection.
 * Better exception handling.
 * Logging - for now code base is so simple, that I have forgotten about this aspect until now.
