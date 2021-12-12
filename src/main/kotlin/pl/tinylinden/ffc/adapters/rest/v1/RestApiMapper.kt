@@ -1,13 +1,10 @@
 package pl.tinylinden.ffc.adapters.rest.v1
 
-import org.mapstruct.InheritInverseConfiguration
-import org.mapstruct.Mapper
-import org.mapstruct.Mapping
-import org.mapstruct.Mappings
+import org.mapstruct.*
 import pl.tinylinden.ffc.adapters.rest.v1.model.*
 import pl.tinylinden.ffc.core.model.*
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 interface RestApiMapper {
 
     fun toDto(core: ShowingsForDate): ShowingsForDateDto

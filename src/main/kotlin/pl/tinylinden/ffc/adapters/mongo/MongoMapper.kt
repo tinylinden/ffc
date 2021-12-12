@@ -1,14 +1,11 @@
 package pl.tinylinden.ffc.adapters.mongo
 
-import org.mapstruct.InheritInverseConfiguration
-import org.mapstruct.Mapper
-import org.mapstruct.Mapping
-import org.mapstruct.Mappings
+import org.mapstruct.*
 import pl.tinylinden.ffc.core.model.Rating
 import pl.tinylinden.ffc.core.model.Showing
 import pl.tinylinden.ffc.core.model.ShowingsForDate
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 interface MongoMapper {
 
     fun toDocument(core: ShowingsForDate): MongoShowingsForDate
