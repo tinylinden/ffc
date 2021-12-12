@@ -9,7 +9,7 @@ import java.time.LocalDate
 @RestController
 class PublicShowingApiEndpoint(
     private val showingsFinder: ShowingsFinder,
-    private val mapper: ApiMapper
+    private val mapper: RestApiMapper
 ) : PublicShowingsApi {
 
     override fun getShowings(from: LocalDate, to: LocalDate): ResponseEntity<List<ShowingsForDateDto>> =

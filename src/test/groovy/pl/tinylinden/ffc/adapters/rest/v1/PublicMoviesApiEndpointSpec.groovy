@@ -18,7 +18,7 @@ class PublicMoviesApiEndpointSpec extends Specification {
 
     AverageRatingFinder averageRatingFinder = Mock()
 
-    ApiMapper apiMapper = Mappers.getMapper(ApiMapper.class)
+    RestApiMapper apiMapper = Mappers.getMapper(RestApiMapper.class)
 
     @Subject
     PublicMoviesApiEndpoint tested =

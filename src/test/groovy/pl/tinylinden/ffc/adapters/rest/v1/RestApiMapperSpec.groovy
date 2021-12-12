@@ -9,11 +9,11 @@ import spock.lang.Subject
 
 import java.time.format.DateTimeFormatter
 
-class ApiMapperSpec extends Specification {
+class RestApiMapperSpec extends Specification {
 
     @Shared
     @Subject
-    ApiMapper tested = Mappers.getMapper(ApiMapper.class)
+    RestApiMapper tested = Mappers.getMapper(RestApiMapper.class)
 
     def "should map Showing to ShowingDto"() {
         given:

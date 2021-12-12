@@ -11,7 +11,7 @@ class PublicShowingApiEndpointSpec extends Specification {
 
     ShowingsFinder showingsFinder = Mock()
 
-    ApiMapper apiMapper = Mappers.getMapper(ApiMapper.class)
+    RestApiMapper apiMapper = Mappers.getMapper(RestApiMapper.class)
 
     @Subject
     PublicShowingApiEndpoint tested = new PublicShowingApiEndpoint(showingsFinder, apiMapper)

@@ -20,10 +20,17 @@ feign:
       default:
         loggerLevel: basic
 
+graphql:
+  spqr:
+    gui:
+      enabled: true
+      endpoint: /graphql-playground
+
 server:
   error:
     include-message: always
 
 logging:
   level:
+    com.atlassian.oai.validator.springmvc.DefaultValidationReportHandler: error
     pl.tinylinden.ffc: trace

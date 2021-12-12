@@ -8,7 +8,7 @@ import pl.tinylinden.ffc.adapters.rest.v1.model.*
 import pl.tinylinden.ffc.core.model.*
 
 @Mapper(componentModel = "spring")
-interface ApiMapper {
+interface RestApiMapper {
 
     fun toDto(core: ShowingsForDate): ShowingsForDateDto
 

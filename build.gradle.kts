@@ -34,6 +34,7 @@ dependencies {
 	implementation("io.springfox:springfox-boot-starter:3.0.0")
 	implementation("javax.validation:validation-api:2.0.0.Final")
 	implementation("com.atlassian.oai:swagger-request-validator-springmvc:2.23.0")
+	implementation("io.leangen.graphql:graphql-spqr-spring-boot-starter:0.0.6")
 	implementation("org.mapstruct:mapstruct:1.4.2.Final")
 
 	kapt("org.mapstruct:mapstruct-processor:1.4.2.Final")

@@ -17,7 +17,7 @@ class PublicMoviesApiEndpoint(
     private val movieDetailsProvider: MovieDetailsProvider,
     private val ratingManager: RatingManager,
     private val averageRatingFinder: AverageRatingFinder,
-    private val mapper: ApiMapper
+    private val mapper: RestApiMapper
 ) : PublicMoviesApi {
 
     override fun getMovieDetails(id: String): ResponseEntity<MovieDetailsDto> =

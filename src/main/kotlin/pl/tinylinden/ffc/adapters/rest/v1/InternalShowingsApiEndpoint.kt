@@ -10,7 +10,7 @@ import java.time.LocalDate
 @RestController
 class InternalShowingsApiEndpoint(
     private val showingsManager: ShowingsManager,
-    private val mapper: ApiMapper
+    private val mapper: RestApiMapper
 ) : InternalShowingsApi {
 
     override fun setOrReplaceShowings(date: LocalDate, showingDto: List<ShowingDto>): ResponseEntity<Unit> {
