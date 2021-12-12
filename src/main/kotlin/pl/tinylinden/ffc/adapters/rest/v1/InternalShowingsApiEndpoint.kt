@@ -8,14 +8,14 @@ import pl.tinylinden.ffc.core.ports.ShowingsManager
 import java.time.LocalDate
 
 @RestController
-class InternalApiEndpoint(
+class InternalShowingsApiEndpoint(
     private val showingsManager: ShowingsManager,
     private val mapper: ApiMapper
-) : InternalApi {
+) : InternalShowingsApi {
 
     override fun setOrReplaceShowings(date: LocalDate, showingDto: List<ShowingDto>): ResponseEntity<Unit> {
         val showings = ShowingsForDate(date, showingDto.map { mapper.fromDto(it) })
         showingsManager.setOrReplaceShowings(listOf(showings))
-        return ResponseEntity.accepted().build()
+        return ResponseEntity.noContent().build()
     }
 }

@@ -3,29 +3,18 @@ package pl.tinylinden.ffc.adapters.rest.v1
 import org.mapstruct.factory.Mappers
 import org.springframework.http.HttpStatus
 import pl.tinylinden.ffc.core.model.CoreDataMother
-import pl.tinylinden.ffc.core.model.MovieId
-import pl.tinylinden.ffc.core.ports.AverageRatingFinder
-import pl.tinylinden.ffc.core.ports.MovieDetailsProvider
-import pl.tinylinden.ffc.core.ports.RatingManager
 import pl.tinylinden.ffc.core.ports.ShowingsFinder
 import spock.lang.Specification
 import spock.lang.Subject
 
-class PublicApiEndpointSpec extends Specification {
+class PublicShowingApiEndpointSpec extends Specification {
 
     ShowingsFinder showingsFinder = Mock()
 
-    MovieDetailsProvider movieDetailsProvider = Mock()
-
-    RatingManager ratingManager = Mock()
-
-    AverageRatingFinder averageRatingFinder = Mock()
-
-    ApiMapper mapper = Mappers.getMapper(ApiMapper.class)
+    ApiMapper apiMapper = Mappers.getMapper(ApiMapper.class)
 
     @Subject
-    PublicApiEndpoint tested =
-            new PublicApiEndpoint(showingsFinder, movieDetailsProvider, ratingManager, averageRatingFinder, mapper)
+    PublicShowingApiEndpoint tested = new PublicShowingApiEndpoint(showingsFinder, apiMapper)
 
     def "should return showings if any was found for given dates"() {
         given:
@@ -38,7 +27,7 @@ class PublicApiEndpointSpec extends Specification {
 
         then:
             actual.statusCode == HttpStatus.OK
-            actual.body == [mapper.toDto(showings)]
+            actual.body == [apiMapper.toDto(showings)]
 
         and:
             showingsFinder.findShowings(fromDate, toDate) >> [showings]
@@ -60,19 +49,4 @@ class PublicApiEndpointSpec extends Specification {
             showingsFinder.findShowings(fromDate, toDate) >> []
     }
 
-    def "should return movie details"() {
-        given:
-            def id = "tt0232500"
-            def movieDetails = CoreDataMother.movieDetails()
-
-        when:
-            def actual = tested.getMovieDetails(id)
-
-        then:
-            actual.statusCode == HttpStatus.OK
-            actual.body == mapper.toDto(movieDetails)
-
-        and:
-            movieDetailsProvider.getMovieDetails(new MovieId(id)) >> movieDetails
-    }
 }

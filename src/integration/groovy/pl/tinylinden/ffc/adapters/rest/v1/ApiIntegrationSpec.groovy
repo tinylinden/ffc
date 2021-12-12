@@ -55,7 +55,7 @@ class ApiIntegrationSpec extends BaseIntegrationSpec {
                     .body(sampleShowings())
                     .put("http://localhost:8080/internal/showings/{date}")
                     .then()
-                    .statusCode(202)
+                    .statusCode(204)
 
         expect:
             def response = RestAssured.given()
@@ -104,7 +104,7 @@ class ApiIntegrationSpec extends BaseIntegrationSpec {
             id << ["tt5433138", "tt0000000"]
     }
 
-    def "should store only last rating for movie for given user"() {
+    def "should store only last movie rating by given user"() {
         when:
             RestAssured.given()
                     .auth().preemptive().basic("elmo", "secret")
@@ -114,7 +114,7 @@ class ApiIntegrationSpec extends BaseIntegrationSpec {
                     .body(sampleRating(3))
                     .post("http://localhost:8080/public/movies/{id}/ratings")
                     .then()
-                    .statusCode(202)
+                    .statusCode(204)
 
         and:
             RestAssured.given()
@@ -125,7 +125,7 @@ class ApiIntegrationSpec extends BaseIntegrationSpec {
                     .body(sampleRating(2))
                     .post("http://localhost:8080/public/movies/{id}/ratings")
                     .then()
-                    .statusCode(202)
+                    .statusCode(204)
 
         then:
             def response = RestAssured.given()
@@ -193,8 +193,8 @@ class ApiIntegrationSpec extends BaseIntegrationSpec {
     private static String expectedAverageRating(int votesCount, double averageRating) {
         return """
                  |{
-                 |  "votesCount": ${votesCount},
-                 |  "averageRating": ${averageRating}
+                 |  "votes_count": ${votesCount},
+                 |  "average_rating": ${averageRating}
                  |}""".stripMargin()
     }
 }

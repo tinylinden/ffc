@@ -5,15 +5,88 @@ info:
 servers:
   - url: "http://localhost:8080/"
     description: "Local development server"
-tags:
-  - name: internal
-  - name: public
 paths:
+  /public/movies/{id}/details:
+    get:
+      summary: Get movie details
+      tags:
+        - PublicMovies
+      operationId: getMovieDetails
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: "^tt\\d+$"
+            example: "tt0232500"
+      responses:
+        200:
+          description: Movie deatails
+          content:
+            application/vnd.ffc.v1+json:
+              schema:
+                $ref: '#/components/schemas/MovieDetails'
+        400:
+          description: If request does not meet API specification
+        404:
+          description: If no details was found
+  /public/movies/{id}/ratings:
+    get:
+      summary: Get average movie rating
+      tags:
+        - PublicMovies
+      operationId: getAverageRating
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: "^tt\\d+$"
+            example: "tt0232500"
+      responses:
+        200:
+          description: Movie average rating
+          content:
+            application/vnd.ffc.v1+json:
+              schema:
+                $ref: '#/components/schemas/AverageRating'
+        400:
+          description: If request does not meet API specification
+    post:
+      summary: Set or replace your rating for given movie
+      tags:
+        - PublicMovies
+      operationId: setOrReplaceRating
+      security:
+        - BasicAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: "^tt\\d+$"
+            example: "tt0232500"
+      requestBody:
+        required: true
+        content:
+          application/vnd.ffc.v1+json:
+            schema:
+              $ref: '#/components/schemas/Rating'
+      responses:
+        204:
+          description: If rating was set or replaced
+        400:
+          description: If request does not meet API specification
+        403:
+          description: If unauthorized
   /public/showings:
     get:
       summary: Get showings for given dates
       tags:
-        - public
+        - PublicShowings
       operationId: getShowings
       parameters:
         - name: from
@@ -41,87 +114,11 @@ paths:
                   $ref: '#/components/schemas/ShowingsForDate'
         400:
           description: If request does not meet API specification
-  /public/movies/{id}/details:
-    get:
-      summary: Get movie details
-      tags:
-        - public
-      operationId: getMovieDetails
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-            pattern: "^tt\\d+$"
-            example: "tt0232500"
-      responses:
-        200:
-          description: Movie deatails
-          content:
-            application/vnd.ffc.v1+json:
-              schema:
-                $ref: '#/components/schemas/MovieDetails'
-        400:
-          description: If request does not meet API specification
-        404:
-          description: If no details was found
-  /public/movies/{id}/ratings:
-    get:
-      summary: Get average movie rating
-      tags:
-        - public
-      operationId: getAverageRating
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-            pattern: "^tt\\d+$"
-            example: "tt0232500"
-      responses:
-        200:
-          description: Movie average rating
-          content:
-            application/vnd.ffc.v1+json:
-              schema:
-                $ref: '#/components/schemas/AverageRating'
-        400:
-          description: If request does not meet API specification
-    post:
-      summary: Set or replace your rating for given movie
-      tags:
-        - public
-      operationId: setOrReplaceRating
-      security:
-        - BasicAuth: []
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-            pattern: "^tt\\d+$"
-            example: "tt0232500"
-      requestBody:
-        required: true
-        content:
-          application/vnd.ffc.v1+json:
-            schema:
-              $ref: '#/components/schemas/Rating'
-      responses:
-        202:
-          description: If rating was set or replaced
-        400:
-          description: If request does not meet API specification
-        403:
-          description: If unauthorized
   /internal/showings/{date}:
     put:
       summary: Set or replace showings for given date
       tags:
-        - internal
+        - InternalShowings
       operationId: setOrReplaceShowings
       security:
         - BasicAuth: []
@@ -142,7 +139,7 @@ paths:
               items:
                 $ref: '#/components/schemas/Showing'
       responses:
-        202:
+        204:
           description: If screenings were set or replaced
         400:
           description: If request does not meet API specification
@@ -232,13 +229,13 @@ components:
           example: 3
     AverageRating:
       required:
-        - votesCount
-        - averageRating
+        - votes_count
+        - average_rating
       properties:
-        votesCount:
+        votes_count:
           type: integer
           example: 102
-        averageRating:
+        average_rating:
           type: number
           format: double
           example: 3.4
