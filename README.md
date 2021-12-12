@@ -28,8 +28,14 @@ so if you decide to import this project to IDE of your choice, some missing clas
 reported. Just re-build the project to fix that issues.
 
 If you want to start the application locally, then all you have to do is start 
-all dependencies with `docker-compose up --detach`. And after that start the 
-application itself with `ADAPTERS_OMDB_API_KEY=<change-me> ./gradlew bootRun`. 
+all dependencies with:
+```
+docker-compose up --detach
+```
+And after that start the service with:
+```
+ADAPTERS_OMDB_API_KEY=<change-me> ./gradlew bootRun
+``` 
 
 > **NOTE:** Just remember to use proper API key for OMDb API instead of `<change-me>`.
 > And when you are done playing with the application tear down MongoDB
