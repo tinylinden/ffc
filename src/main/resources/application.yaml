@@ -20,7 +20,10 @@ feign:
       default:
         loggerLevel: basic
 
+server:
+  error:
+    include-message: always
+
 logging:
   level:
-#    org.springframework.security: debug
     pl.tinylinden.ffc: trace

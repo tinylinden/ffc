@@ -33,6 +33,7 @@ dependencies {
 	implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
 	implementation("io.springfox:springfox-boot-starter:3.0.0")
 	implementation("javax.validation:validation-api:2.0.0.Final")
+	implementation("com.atlassian.oai:swagger-request-validator-springmvc:2.23.0")
 	implementation("org.mapstruct:mapstruct:1.4.2.Final")
 
 	kapt("org.mapstruct:mapstruct-processor:1.4.2.Final")

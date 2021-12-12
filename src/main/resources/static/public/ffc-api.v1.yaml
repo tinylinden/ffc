@@ -168,7 +168,7 @@ components:
       required:
         - movie_id
         - start_at
-        - ticket_prices
+        - ticket_price
       properties:
         movie_id:
           type: string
