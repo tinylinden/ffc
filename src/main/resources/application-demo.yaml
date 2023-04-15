@@ -1,0 +1,3 @@
+logging:
+  pattern:
+    console: "%d{HH:mm:ss.SSS} %highlight(%.-1level) %cyan(%40.40logger{39}): %msg%n%throwable"
